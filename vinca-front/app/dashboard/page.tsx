@@ -3,7 +3,9 @@
 import { useState } from 'react'
 
 import Image from 'next/image'
-import { Link, Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Tabs, Tab, Card, CardBody, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Avatar, Popover, PopoverContent, PopoverTrigger, Switch } from "@nextui-org/react";
+import Navbar from '../../components/navbar';
+
+import { Link, Button, NavbarBrand, NavbarContent, NavbarItem, Tabs, Tab, Card, CardBody, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Avatar, Popover, PopoverContent, PopoverTrigger, Switch } from "@nextui-org/react";
 
 import flare from "@/public/tokens/flare.png"
 import eth from "@/public/tokens/eth.png"
@@ -16,36 +18,7 @@ export default function Dashboard() {
 	return (
 		<main className="flex flex-col min-h-screen">
 
-			{/* NavBar */}
-			<Navbar className="py-2">
-				<NavbarBrand>
-					<p className="">Vinca Protocol</p>
-				</NavbarBrand>
-				<NavbarContent className="" justify="center">
-					<NavbarItem isActive>
-						<Link href="#" className="text-vinca">
-							Dashboard
-						</Link>
-					</NavbarItem>
-					<NavbarItem>
-						<Popover placement="bottom" showArrow={true}>
-							<PopoverTrigger>
-								<Link color="foreground">Settings</Link>
-							</PopoverTrigger>
-							<PopoverContent className="p-4 items-start">
-								<Switch className="my-2" color="secondary" defaultSelected>Live price</Switch>
-								<Switch className="my-2" color="secondary">Display variations</Switch>
-								<Switch className="my-2" color="secondary">Hide amounts</Switch>
-							</PopoverContent>
-						</Popover>
-					</NavbarItem>
-				</NavbarContent>
-				<NavbarContent justify="end">
-					<NavbarItem className="">
-						<Link><Button className="bg-vinca text-white">Connect wallet</Button></Link>
-					</NavbarItem>
-				</NavbarContent>
-			</Navbar>
+			<Navbar activePage="dashboard" />
 
 			{/* Page content */}
 			<div className="mx-12 my-4">
@@ -255,7 +228,6 @@ export default function Dashboard() {
 						</Tab>
 					</Tabs>
 				</div>
-
 			</div>
 		</main>
 	);

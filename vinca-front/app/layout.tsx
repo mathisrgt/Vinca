@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Questrial } from "next/font/google";
 import "./globals.css";
 
+import Providers from "@/app/providers";
+
 const quest = Questrial({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
@@ -16,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={quest.className}>{children}</body>
+      <body className={quest.className}>
+        <Providers>{children}</Providers>
+        </body>
     </html>
   );
 }

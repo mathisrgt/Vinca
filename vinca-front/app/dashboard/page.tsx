@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 import Image from 'next/image'
-import { Link, Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Tabs, Tab, Card, CardBody, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Avatar } from "@nextui-org/react";
+import { Link, Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Tabs, Tab, Card, CardBody, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Avatar, Popover, PopoverContent, PopoverTrigger, Switch } from "@nextui-org/react";
 
 import flare from "@/public/tokens/flare.png"
 import eth from "@/public/tokens/eth.png"
@@ -28,9 +28,16 @@ export default function Dashboard() {
 						</Link>
 					</NavbarItem>
 					<NavbarItem>
-						<Link color="foreground" href="#">
-							Settings
-						</Link>
+						<Popover placement="bottom" showArrow={true}>
+							<PopoverTrigger>
+								<Link color="foreground">Settings</Link>
+							</PopoverTrigger>
+							<PopoverContent className="p-4 items-start">
+								<Switch className="my-2" color="secondary" defaultSelected>Live price</Switch>
+								<Switch className="my-2" color="secondary">Display variations</Switch>
+								<Switch className="my-2" color="secondary">Hide amounts</Switch>
+							</PopoverContent>
+						</Popover>
 					</NavbarItem>
 				</NavbarContent>
 				<NavbarContent justify="end">

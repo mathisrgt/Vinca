@@ -41,6 +41,13 @@ contract SimplePool {
         return balances;
     }
 
+    function borrow(address asset, uint256 amount) external {
+        require(asset == usdc);
+        usdcReserve.executeTransaction(msg.sender, amount);
+    }
+
+
+
 
 
     

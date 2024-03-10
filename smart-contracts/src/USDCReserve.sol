@@ -7,9 +7,12 @@ contract USDCReserve {
 
     IERC20 usdc;
     mapping(address => uint256) public balances;
+    address owner;
+    address pool;
     
     constructor(address _usdc) {
         usdc = IERC20(_usdc);
+        owner = msg.sender;
     }
 
     function supply(uint256 amount) external {
@@ -34,5 +37,15 @@ contract USDCReserve {
 
     function getAssetAddress() external view returns (address) {
         return address(usdc);
+    }
+
+    function setPool(address _pool) external{
+        require(msg.sender == address(owner));
+        pool = _pool;
+    }
+
+    function executeTransaction(address user, uint256 amount) external {
+        require(msg.sender == pool);
+        IERC20(address(usdc)).transfer(user, amount);
     }
 }

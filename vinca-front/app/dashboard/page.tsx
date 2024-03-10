@@ -125,9 +125,7 @@ export default function Dashboard() {
 						<Tab key="mySupplies" title="MySupplies" className="flex flex-col items-center">
 							<Table aria-label="Controlled table example with dynamic content"
 								color="default"
-								selectionMode="multiple"
-								selectedKeys={selectedKeys}
-								onSelectionChange={setSelectedKeys}>
+								selectionMode="multiple">
 
 								<TableHeader>
 									<TableColumn>Assets</TableColumn>
@@ -174,9 +172,7 @@ export default function Dashboard() {
 						<Tab key="myBorrows" title="MyBorrows" className="flex flex-col items-center">
 							<Table aria-label="Controlled table example with dynamic content"
 								color="default"
-								selectionMode="multiple"
-								selectedKeys={selectedKeys}
-								onSelectionChange={setSelectedKeys}>
+								selectionMode="multiple">
 
 								<TableHeader>
 									<TableColumn>Assets</TableColumn>

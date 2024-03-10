@@ -5,7 +5,15 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@flarenetwork/flare-periphery-contracts/flare/util-contracts/userInterfaces/IFlareContractRegistry.sol";
 import "@flarenetwork/flare-periphery-contracts/flare/ftso/userInterfaces/IFtsoRegistry.sol";
 
+
 contract WBTCReserve {
+
+    struct priceStruct {
+        uint256 price;
+        uint256 timestamp;
+        uint256 decimals;
+
+    }
 
     IERC20 wbtc;
     mapping(address => uint256) public balances;
@@ -33,7 +41,7 @@ contract WBTCReserve {
         balances[msg.sender] -= amount;
     }
 
-    function getAssetPrice() external view returns (uint256) {
+    function getAssetPrice() external view returns (uint256, uint256, uint256){
         uint256 _price;
         uint256 _timestamp;
         uint256 _decimals;
@@ -48,8 +56,7 @@ contract WBTCReserve {
         // 4. Get latest price
         (_price, _timestamp, _decimals) =
             ftsoRegistry.getCurrentPriceWithDecimals("testBTC");
-
-        return _price;
+        return (_price, _timestamp, _decimals);
     }
 
     function getAssetAddress() external view returns (address) {

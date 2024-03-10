@@ -1,15 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {IERC20} from "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
-import {IFtsoRegistry} from "lib/flare-foundry-periphery-package/src/coston2/ftso/userInterfaces/IFtsoRegistry.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@flarenetwork/flare-periphery-contracts/flare/util-contracts/userInterfaces/IFlareContractRegistry.sol";
+import "@flarenetwork/flare-periphery-contracts/flare/ftso/userInterfaces/IFtsoRegistry.sol";
 
-import {FlareContractsRegistryLibrary} from "lib/flare-foundry-periphery-package/src/coston2/util-contracts/ContractRegistryLibrary.sol";
 contract WBTCReserve {
 
     IERC20 wbtc;
     mapping(address => uint256) public balances;
-    IFtsoRegistry ftsoRegistry;
+    address private constant FLARE_CONTRACT_REGISTRY =
+        0xaD67FE66660Fb8dFE9d6b1b4240d8650e30F6019;
+
     
     constructor(address _wBTC) {
         wbtc = IERC20(_wBTC);
@@ -36,13 +38,17 @@ contract WBTCReserve {
         uint256 _timestamp;
         uint256 _decimals;
 
-        (_price, _timestamp, _decimals) = ftsoRegistry
-            .getCurrentPriceWithDecimals("BTC");
+        IFlareContractRegistry contractRegistry = IFlareContractRegistry(
+            FLARE_CONTRACT_REGISTRY);
+
+        // 3. Retrieve the FTSO Registry
+        IFtsoRegistry ftsoRegistry = IFtsoRegistry(
+            contractRegistry.getContractAddressByName('FtsoRegistry'));
+
+        // 4. Get latest price
+        (_price, _timestamp, _decimals) =
+            ftsoRegistry.getCurrentPriceWithDecimals("testBTC");
 
         return _price;
-    }
-
-    function registerOracle(address _ftsoRegistry) external {
-        ftsoRegistry = IFtsoRegistry(_ftsoRegistry);
     }
 }

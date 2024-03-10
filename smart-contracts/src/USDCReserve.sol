@@ -1,17 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {IERC20} from "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
-import {SimplePool} from "./SimplePool.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract USDCReserve {
 
     IERC20 usdc;
     mapping(address => uint256) public balances;
-    SimplePool pool;
+    address owner;
+    address pool;
+
     
     constructor(address _usdc) {
         usdc = IERC20(_usdc);
+        owner = msg.sender;
     }
 
     function supply(uint256 amount) external {
@@ -34,14 +36,17 @@ contract USDCReserve {
         return 1;
     }
 
-        function registerPool(address _pool) external {
-        pool = SimplePool(_pool);
+    function getAssetAddress() external view returns (address) {
+        return address(usdc);
     }
 
-    function executeTransfert(address _user, uint256 _amount) external {
-        require(msg.sender == address(pool), "Only pool can execute borrow");
-        IERC20(address(usdc)).transfer(_user, _amount);
+    function setPool(address _pool) external{
+        require(msg.sender == address(owner));
+        pool = _pool;
     }
 
-    
+    function executeTransaction(address user, uint256 amount) external {
+        require(msg.sender == pool);
+        IERC20(address(usdc)).transfer(user, amount);
+    }
 }

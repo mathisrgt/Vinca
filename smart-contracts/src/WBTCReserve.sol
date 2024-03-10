@@ -5,24 +5,13 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@flarenetwork/flare-periphery-contracts/flare/util-contracts/userInterfaces/IFlareContractRegistry.sol";
 import "@flarenetwork/flare-periphery-contracts/flare/ftso/userInterfaces/IFtsoRegistry.sol";
 
-<<<<<<< HEAD
-=======
-import {FlareContractsRegistryLibrary} from "lib/flare-foundry-periphery-package/src/coston2/util-contracts/ContractRegistryLibrary.sol";
-import {SimplePool} from "./SimplePool.sol";
-
->>>>>>> executeTransfert
 contract WBTCReserve {
 
     IERC20 wbtc;
     mapping(address => uint256) public balances;
-<<<<<<< HEAD
     address private constant FLARE_CONTRACT_REGISTRY =
         0xaD67FE66660Fb8dFE9d6b1b4240d8650e30F6019;
 
-=======
-    IFtsoRegistry ftsoRegistry;
-    SimplePool pool;
->>>>>>> executeTransfert
     
     constructor(address _wBTC) {
         wbtc = IERC20(_wBTC);
@@ -63,8 +52,7 @@ contract WBTCReserve {
         return _price;
     }
 
-    function executeTransfert(address _user, uint256 _amount) external {
-        require(msg.sender == address(pool), "Only pool can execute borrow");
-        IERC20(address(wbtc)).transfer(_user, _amount);
+    function getAssetAddress() external view returns (address) {
+        return address(wbtc);
     }
 }

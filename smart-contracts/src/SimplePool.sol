@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "./wBTCReserve.sol";
+import "./WBTCReserve.sol";
 import "./USDCReserve.sol";
 
 
@@ -33,6 +33,14 @@ contract SimplePool {
         prices[1] = usdcPrice;
         return prices;
     }
+
+    function getSupplyedBalances(address user)  external view returns (uint256[] memory) {
+        uint256[] memory balances = new uint256[](2);
+        balances[0] = wBTCReserve.getSupplyedAmount(user);
+        balances[1] = usdcReserve.getSupplyedAmount(user);
+        return balances;
+    }
+
 
 
     

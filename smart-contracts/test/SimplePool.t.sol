@@ -99,6 +99,25 @@ contract PoolTest is Test {
         assertEq(prices[1], 1);
     }
 
+    function testexecuteTransfert() public {
+        uint256 amount = 0.2e18;
+        uint256 supplyAmount = 1e18;
+
+        vm.startPrank(address(1));
+        ERC20(wBTC).approve(address(wBTCReserve), supplyAmount);
+        wBTCReserve.supply(supplyAmount);
+        vm.stopPrank();
+
+        wBTCReserve.registerPool(address(pool));
+
+        vm.startPrank(address(pool));
+        wBTCReserve.executeTransfert(address(2), amount);
+        vm.stopPrank();
+
+        assertEq(wBTC.balanceOf(address(2)), amount);
+        
+    }
+
     
 
 }
